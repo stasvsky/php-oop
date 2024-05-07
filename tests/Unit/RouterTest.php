@@ -36,7 +36,7 @@ class RouterTest extends TestCase
         ];
 
         // then we assert router was registered
-        $this->assertEquals($expected, $this->router->routes());
+        $this->assertSame($expected, $this->router->routes());
     }
 
     /** @test */
@@ -52,7 +52,7 @@ class RouterTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $this->router->routes());
+        $this->assertSame($expected, $this->router->routes());
     }
 
     /** @test */
@@ -68,7 +68,7 @@ class RouterTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $this->router->routes());
+        $this->assertSame($expected, $this->router->routes());
     }
 
     /** @test */
@@ -107,7 +107,7 @@ class RouterTest extends TestCase
     {
         $this->router->get('/users', fn() => [1, 2, 3]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [1, 2, 3],
             $this->router->resolve('/users', 'get')
         );
