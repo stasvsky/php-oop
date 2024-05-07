@@ -8,14 +8,14 @@
     <title>Document</title>
 </head>
 <body>
-<!--    <h1>--><?php //echo $this->params['foo']; ?><!--</h1>-->
-<!--    <h1>--><?php //echo $this->foo; ?><!--</h1>-->
-    <h1><?php echo $foo; ?></h1>
-
-    <form method="post" action="/upload" enctype="multipart/form-data">
-        <input type="file" name="receipt[]" />
-        <input type="file" name="receipt[]" />
-        <button type="submit">Upload</button>
-    </form>
+    Home Page
+    <hr/>
+    <div>
+        <?php if (!empty($invoice)): ?>
+            Invoice ID: <?= htmlspecialchars($invoice['id'],ENT_QUOTES) ?> <br />
+            Invoice Amount: <?= htmlspecialchars($invoice['amount'],ENT_QUOTES) ?> <br />
+            User: <?= htmlspecialchars($invoice['full_name'],ENT_QUOTES) ?> <br />
+        <?php endif; ?>
+    </div>
 </body>
 </html>

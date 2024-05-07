@@ -4,23 +4,31 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Models\Invoice;
+use App\Models\SignUp;
+use App\Models\User;
 use App\View;
 
 class HomeController
 {
     public function index(): View
     {
-        return View::make('index', ['foo' => 'bar']);
-    }
+        $email = 'jane22@doe.com';
+        $name = 'Jane22 Doe22';
+        $amount = 1200;
 
-    public function upload()
-    {
-        $filePath = STORAGE_PATH . '/' . $_FILES['receipt']['name'];
+        $userModel    = new User();
+        $invoiceModel = new Invoice();
+        $invoiceId    = (new SignUp($userModel, $invoiceModel))->register(
+            [
+                'email' => $email,
+                'name' => $name,
+            ],
+            [
+                'amount' => $amount
+            ]
+        );
 
-        move_uploaded_file($_FILES['receipt']['tmp_name'], $filePath);
-
-        echo '<pre>';
-        var_dump(pathinfo($filePath));
-        echo '</pre>';
+        return View::make('index', ['invoice' => $invoiceModel->find($invoiceId)]);
     }
 }
