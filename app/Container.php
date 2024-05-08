@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use App\Exceptions\Container\ContainerException;
-use App\Exceptions\Container\NotFoundException;
 use Psr\Container\ContainerInterface;
 
 class Container implements ContainerInterface
@@ -17,10 +16,13 @@ class Container implements ContainerInterface
         if ($this->has($id)) {
             $entry = $this->entries[$id];
 
-            return $entry($this);
+            if (is_callable($entry)) {
+                return $entry($this);
+            }
+
+            $id = $entry;
         }
 
-        // throw new NotFoundException('Class "' . $id . '" has no binding');
         return $this->resolve($id);
     }
 
@@ -29,7 +31,7 @@ class Container implements ContainerInterface
         return isset($this->entries[$id]);
     }
 
-    public function set(string $id, callable $concrete): void
+    public function set(string $id, callable|string $concrete): void
     {
         $this->entries[$id] = $concrete;
     }
