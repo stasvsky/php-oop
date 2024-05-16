@@ -29,6 +29,7 @@ class GeneratorExampleController
     //     }
     // }
 
+    #[Route('/example/generator')]
     public function index()
     {
         foreach ($this->ticketModel->all() as $ticket) {

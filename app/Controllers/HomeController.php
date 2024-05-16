@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Container;
+use App\Attributes\Route;
 use App\Services\InvoiceService;
 use App\View;
 
@@ -14,6 +14,7 @@ class HomeController
     {
     }
 
+    #[Route('/')]
     public function index(): View
     {
         // $email = 'jane22@doe.com';
@@ -38,5 +39,17 @@ class HomeController
         $this->invoiceService->process([], 25);
 
         return View::make('index');
+    }
+
+    #[Route('/', 'post')]
+    public function store()
+    {
+
+    }
+
+    #[Route('/', 'put')]
+    public function update()
+    {
+
     }
 }
