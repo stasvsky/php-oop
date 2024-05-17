@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Controllers;
 
@@ -19,7 +19,6 @@ class HomeController
     }
 
     #[Get('/')]
-    // #[Get(routePath: '/home')]
     #[Route('/home', HttpMethod::Head)]
     public function index(): View
     {
@@ -28,13 +27,13 @@ class HomeController
         return View::make('index');
     }
 
-    #[Post('/', 'post')]
+    #[Post('/')]
     public function store()
     {
 
     }
 
-    #[Put('/', 'put')]
+    #[Put('/')]
     public function update()
     {
 

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Tests\Unit;
 
@@ -19,37 +19,29 @@ class RouterTest extends TestCase
         $this->router = new Router();
     }
 
-    // public function test_that_it_registers_a_route(): void
     /** @test */
     public function it_registers_a_route(): void
     {
-        // given that we have a router object
-        // $this->router = new Router();
-
-        // when we call a register method
         $this->router->register('get', '/users', ['Users', 'index']);
 
         $expected = [
             'get' => [
-                '/users' => ['Users', 'index']
-            ]
+                '/users' => ['Users', 'index'],
+            ],
         ];
 
-        // then we assert router was registered
         $this->assertSame($expected, $this->router->routes());
     }
 
     /** @test */
     public function it_registers_a_get_route(): void
     {
-        // $this->router = new Router();
-
         $this->router->get('/users', ['Users', 'index']);
 
         $expected = [
             'get' => [
-                '/users' => ['Users', 'index']
-            ]
+                '/users' => ['Users', 'index'],
+            ],
         ];
 
         $this->assertSame($expected, $this->router->routes());
@@ -58,38 +50,33 @@ class RouterTest extends TestCase
     /** @test */
     public function it_registers_a_post_route(): void
     {
-        // $rthis-outer = new Router();
-
         $this->router->post('/users', ['Users', 'store']);
 
         $expected = [
             'post' => [
-                '/users' => ['Users', 'store']
-            ]
+                '/users' => ['Users', 'store'],
+            ],
         ];
 
         $this->assertSame($expected, $this->router->routes());
     }
 
     /** @test */
-    public function there_are_no_routers_when_router_is_created(): void
+    public function there_are_no_routes_when_router_is_created(): void
     {
-        $router = new Router();
-
-        $this->assertEmpty($router->routes());
+        $this->assertEmpty((new Router())->routes());
     }
 
     /**
      * @test
-     * @dataProvider \Tests\DataProviders\RouterDataProvider::routeNotFoundCases
+     * @dataProvider routeNotFoundCases
      */
     public function it_throws_route_not_found_exception(
         string $requestUri,
         string $requestMethod
-    ): void
-    {
+    ): void {
         $users = new class() {
-            public function delete()
+            public function delete(): bool
             {
                 return true;
             }
@@ -102,8 +89,18 @@ class RouterTest extends TestCase
         $this->router->resolve($requestUri, $requestMethod);
     }
 
+    public function routeNotFoundCases(): array
+    {
+        return [
+            ['/users', 'put'],
+            ['/invoices', 'post'],
+            ['/users', 'get'],
+            ['/users', 'post'],
+        ];
+    }
+
     /** @test */
-    public function it_resolves_route_from_a_closure()
+    public function it_resolves_route_from_a_closure(): void
     {
         $this->router->get('/users', fn() => [1, 2, 3]);
 

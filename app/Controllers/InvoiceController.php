@@ -1,32 +1,21 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Controllers;
 
+use App\Attributes\Get;
+use App\Enums\InvoiceStatus;
 use App\Models\Invoice;
 use App\View;
 
 class InvoiceController
 {
+    #[Get('/invoices')]
     public function index(): View
     {
-        return View::make('invoices/index');
-    }
+        $invoices = (new Invoice())->all(InvoiceStatus::Paid);
 
-    public function create(): View
-    {
-        return View::make('invoices/create');
-    }
-
-    public function store()
-    {
-        $invoice = new Invoice();
-
-        $amount = $_POST['amount'];
-
-        $invoice->store($amount);
-
-        var_dump($amount);
+        return View::make('invoices/index', ['invoices' => $invoices]);
     }
 }
