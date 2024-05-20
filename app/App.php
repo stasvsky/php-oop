@@ -20,7 +20,6 @@ class App
         protected ?Router $router = null,
         protected array $request = []
     ) {
-        static::$db = new DB($config->db ?? []);
     }
 
     public static function db(): DB
@@ -34,6 +33,8 @@ class App
         $dotenv->load();
 
         $this->config = new Config($_ENV);
+
+        static::$db = new DB($this->config->db ?? []);
 
         $this->container->set(PaymentGatewayServiceInterface::class, PaymentGatewayService::class);
         $this->container->set(MailerInterface::class, fn() => new CustomMailer($this->config->mailer['dsn']));
