@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App;
 
@@ -16,13 +16,13 @@ class DB
     public function __construct(array $config)
     {
         $defaultOptions = [
-            PDO::ATTR_EMULATE_PREPARES => false,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ];
 
         try {
             $this->pdo = new PDO(
-                $config['driver'] . ':host=' . $config['host'] .';dbname=' . $config['database'],
+                $config['driver'] . ':host=' . $config['host'] . ';dbname=' . $config['database'],
                 $config['user'],
                 $config['pass'],
                 $config['options'] ?? $defaultOptions

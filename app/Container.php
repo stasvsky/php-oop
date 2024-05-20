@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App;
 
 use App\Exceptions\Container\ContainerException;
+use App\Exceptions\Container\NotFoundException;
 use Psr\Container\ContainerInterface;
 
 class Container implements ContainerInterface
@@ -39,7 +40,11 @@ class Container implements ContainerInterface
     public function resolve(string $id)
     {
         // 1. Inspect the class that we are trying to get from the container
-        $reflectionClass = new \ReflectionClass($id);
+        try {
+            $reflectionClass = new \ReflectionClass($id);
+        } catch(\ReflectionException $e) {
+            throw new NotFoundException($e->getMessage(), $e->getCode(), $e);
+        }
 
         if (! $reflectionClass->isInstantiable()) {
             throw new ContainerException('Class "' . $id . '" is not instantiable');

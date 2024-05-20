@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Controllers;
 
@@ -14,27 +14,20 @@ class GeneratorExampleController
     {
     }
 
-    // public function index()
-    // {
-    //     $numbers = $this->lazyRange(1, 10);
-    //
-    //     foreach ($numbers as $key => $number) {
-    //         echo $key . ': ' . $number . '<br>';
-    //     }
-    // }
-
-    // private function lazyRange(int $start, int $end): Generator
-    // {
-    //     for ($i = $start; $i <= $end; $i++) {
-    //         yield $i * 5 => $i;
-    //     }
-    // }
-
-    #[Route('/example/generator')]
+    #[Route('/examples/generator')]
     public function index()
     {
-        foreach ($this->ticketModel->all() as $ticket) {
+        $tickets = $this->ticketModel->all();
+
+        foreach($tickets as $ticket) {
             echo $ticket['id'] . ': ' . substr($ticket['content'], 0, 15) . '<br />';
+        }
+    }
+
+    private function lazyRange(int $start, int $end): Generator
+    {
+        for ($i = $start; $i <= $end; $i++) {
+            yield $i;
         }
     }
 }
